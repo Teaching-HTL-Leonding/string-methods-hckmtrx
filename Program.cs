@@ -1,24 +1,26 @@
 ﻿#region Main Program
-char firstChar = GetCharFromUser("Char for \"IndexOf\":\t");
-char secondChar = GetCharFromUser("Char for \"Trim\":\t");
-
-do
 {
-    Console.Write("String: ");
-    string input = Console.ReadLine()!;
-    if (Trim(input, ' ') == string.Empty) { break; }
+    char firstChar = GetCharFromUser("Char for \"IndexOf\":\t");
+    char secondChar = GetCharFromUser("Char for \"Trim\":\t");
 
-    string MethodCallMessage(char c) => $"(\"{input}\", '{c}') = ";
+    do
+    {
+        Console.Write("String: ");
+        string input = Console.ReadLine()!;
+        if (Trim(input, ' ') == string.Empty) { break; }
 
-    Console.WriteLine($"IndexOf{MethodCallMessage(firstChar)}{IndexOf(input, firstChar)}");
-    Console.WriteLine($"LastIndexOf{MethodCallMessage(firstChar)}{LastIndexOf(input, firstChar)}");
-    Console.WriteLine($"Contains{MethodCallMessage(firstChar)}{Contains(input, firstChar)}");
+        string MethodCallMessage(char c) => $"(\"{input}\", '{c}') = ";
 
-    Console.WriteLine($"TrimStart{MethodCallMessage(secondChar)}\"{TrimStart(input, secondChar)}\"");
-    Console.WriteLine($"TrimEnd{MethodCallMessage(secondChar)}\"{TrimEnd(input, secondChar)}\"");
-    Console.WriteLine($"Trim{MethodCallMessage(secondChar)}\"{Trim(input, secondChar)}\"");
-    Console.WriteLine($"Remove(\"{input}\", 2, 2) = \"{Remove(input, 2, 2)}\"");
-} while (true);
+        Console.WriteLine($"IndexOf{MethodCallMessage(firstChar)}{IndexOf(input, firstChar)}");
+        Console.WriteLine($"LastIndexOf{MethodCallMessage(firstChar)}{LastIndexOf(input, firstChar)}");
+        Console.WriteLine($"Contains{MethodCallMessage(firstChar)}{Contains(input, firstChar)}");
+
+        Console.WriteLine($"TrimStart{MethodCallMessage(secondChar)}\"{TrimStart(input, secondChar)}\"");
+        Console.WriteLine($"TrimEnd{MethodCallMessage(secondChar)}\"{TrimEnd(input, secondChar)}\"");
+        Console.WriteLine($"Trim{MethodCallMessage(secondChar)}\"{Trim(input, secondChar)}\"");
+        Console.WriteLine($"Remove(\"{input}\", 2, 2) = \"{Remove(input, 2, 2)}\"");
+    } while (true);
+}
 #endregion
 
 #region Other Methods
@@ -88,8 +90,11 @@ string TrimEnd(string input, char trimChar)
 string Trim(string input, char trimChar)
 {
     int start = 0, end = input.Length - 1;
-    while (input.Length > start && input[start] == trimChar) { start++; }
-    while (input.Length < end && input[end] == trimChar) { end--; }
+    for (int i = 0; i < input.Length / 2; i++)
+    {
+        if (input[start] == trimChar) { start++; }
+        if (input[end] == trimChar) { end--; }
+    }
 
     return SubString(input, start, end - start + 1);
 }
