@@ -43,7 +43,7 @@ char GetCharFromUser(string prompt)
 #region String Methods
 bool Contains(string input, char searchChar)
 {
-    for (int i = 0; i < input.Length / 2; i++)
+    for (int i = 0; i < input.Length / 2 + 1; i++)
     {
         if (input[i] == searchChar || input[^(i + 1)] == searchChar) { return true; }
     }
@@ -74,7 +74,11 @@ int LastIndexOf(string input, char searchChar)
 string TrimStart(string input, char trimChar)
 {
     int start = 0;
-    while (input[start] == trimChar) { start++; }
+    foreach (var c in input)
+    {
+        if (input[start] == trimChar) { start++; }
+        else { break; }
+    }
 
     return SubString(input, start, input.Length);
 }
@@ -82,21 +86,18 @@ string TrimStart(string input, char trimChar)
 string TrimEnd(string input, char trimChar)
 {
     int end = input.Length - 1;
-    while (input[end] == trimChar) { end--; }
+    foreach (var c in input)
+    {
+        if (input[end] == trimChar) { end--; }
+        else { break; }
+    }
 
     return SubString(input, 0, end + 1);
 }
 
 string Trim(string input, char trimChar)
 {
-    int start = 0, end = input.Length - 1;
-    for (int i = 0; i < input.Length / 2; i++)
-    {
-        if (input[start] == trimChar) { start++; }
-        if (input[end] == trimChar) { end--; }
-    }
-
-    return SubString(input, start, end - start + 1);
+    return TrimEnd(TrimStart(input, trimChar), trimChar);
 }
 
 string SubString(string input, int start, int length)
